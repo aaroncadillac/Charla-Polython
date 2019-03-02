@@ -1,0 +1,106 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="hackathon-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h1>Ciclo de vida de un componente</h1>
+    <p>Bienvenidos al Polython: [[notConnectedProperty]]</p>
+    <p>Version de Polymer: [[connectedProperty]]</p>
+    <p>timestamp: [[timestamp]]</p>
+    <p>nuevo valor: [[nuevoValor]]</p>
+    <!--<hackathon-element not-connected-property="2020" connected-property="2.0"></hackathon-element>-->
+  </template>
+
+  <script>
+    /**
+     * `hackathon-element`
+     * Componentent Life-cycle demostration 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class HackathonElement extends Polymer.Element {
+      static get is() { return 'hackathon-element'; }
+      static get properties() {
+        return {
+          connectedProperty: {
+            type: String,
+            value: ''
+          },
+          timestamp: {
+            type: String,
+            value: ''
+          },
+          nuevoValor: {
+            type: String,
+            value: ''
+          }
+        }
+      }
+      constructor() {
+        super()
+        this.notConnectedProperty = "2019"
+        console.group('Constructor')
+        console.log('%cComponente instanciado - Sistema de datos sin cargar', 'padding: 5px; background-color: #5C6BC0; color: #e5e5e5;');
+        console.log('connectedProperty: ', this.connectedProperty);
+        console.log('notConnectedProperty: ', this.notConnectedProperty);
+        console.groupEnd();
+      }
+
+      ready() {
+        super.ready();
+        console.group('Ready')
+        console.log('%cComponente listo - Sistema de datos cargado', 'padding: 5px; background-color: #7CB342; color: #202020;');
+        console.log('connectedProperty: ', this.connectedProperty);
+        console.log('notConnectedProperty: ', this.notConnectedProperty);
+        console.groupEnd();
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        console.group('Connected Callback')
+        console.log('%cComponente listo - Sistema de datos cargado', 'padding: 5px; background-color: #FFA726; color: #252525;')
+        console.log('connectedProperty: ', this.connectedProperty);
+        console.log('notConnectedProperty: ', this.notConnectedProperty);
+        console.groupEnd();
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        console.group('Disconnected Callback');
+        console.log('%cComponente desconecatado - Sistema de datos cargado', 'padding: 5px; background-color: #E53935; color: #e5e5e5;');
+        console.log('connectedProperty: ', this.connectedProperty);
+        console.log('notConnectedProperty: ', this.notConnectedProperty);
+        console.groupEnd();
+      }
+
+      attributeChangedCallback(propiedad, valorAnterior, valorNuevo) {
+        super.attributeChangedCallback();
+        console.group('Attribute Change Callback');
+        console.log('%cCambio de atributos', 'padding: 5px; background-color: #757575; color: #e5e5e5;');
+        console.log(`${propiedad} cambio de ${valorAnterior} a ${valorNuevo}`);
+        console.groupEnd();
+        switch(propiedad) {
+          case 'connected-property':
+            this.set('connectedProperty', valorNuevo);
+          break;
+          case 'timestamp':
+            this.set('timestamp', valorNuevo);
+          break;
+          case 'nuevo-valor':
+            this.set('nuevoValor', valorNuevo);
+          break;
+          default:
+          break;
+        }
+      } 
+    }
+
+    window.customElements.define(HackathonElement.is, HackathonElement);
+  </script>
+</dom-module>

@@ -1,0 +1,53 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./hackathon-element.html">
+
+<dom-module id="container-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+  </template>
+
+  <script>
+    /**
+     * `hackathon-element`
+     * Componentent Life-cycle demostration 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ContainerElement extends Polymer.Element {
+      static get is() { return 'container-element'; }
+      ready() {
+        super.ready()
+
+        let hackElement = document.createElement("hackathon-element");
+        hackElement.setAttribute('id', 'hack');
+        hackElement.setAttribute('connected-property', '2.0');
+        hackElement.setAttribute('timestamp', '0');
+        hackElement.setAttribute('not-connected-property', '2020');
+
+        this.root.appendChild(hackElement);
+        
+        setTimeout(() => {
+          this.root.removeChild(hackElement)
+        }, 2000);
+        setTimeout(() => {
+          this.root.appendChild(hackElement)
+        }, 4000);
+        setTimeout(() => {
+          let date = new Date();
+          let hackEl = this.shadowRoot.querySelector('#hack');
+          hackEl.setAttribute('timestamp', date.getTime())
+          hackEl.setAttribute('nuevo-valor', 'Este es un nuevo valor')
+        }, 6000);
+      }
+    }
+
+    window.customElements.define(ContainerElement.is, ContainerElement);
+  </script>
+</dom-module>
